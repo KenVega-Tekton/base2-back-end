@@ -4,6 +4,7 @@ function getDishes(req, res) {
   DishModel.find()
     .then(dishes => {
       if (!dishes) {
+        // esto tiene sentido si find() puede retornar undefined
         return res.status(400).jsonp();
       }
 
@@ -14,6 +15,19 @@ function getDishes(req, res) {
     });
 }
 
+function createDish(req, res) {
+  const newDishInstance = new DishModel({
+    name: req.body.name,
+    price: req.body.price
+  });
+
+  newDishInstance
+    .save()
+    .then(newDish => res.status(200).jsonp(newDish))
+    .catch(err => res.status(400).jsonp(err));
+}
+
 module.exports = {
-  getDishes
+  getDishes,
+  createDish
 };
