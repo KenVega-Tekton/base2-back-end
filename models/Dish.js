@@ -5,11 +5,14 @@ const DishSchema = new Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     price: {
       type: Number,
-      required: true
+      required: true,
+      min: [5, "The price you gave is very low for this dish"],
+      max: 40
     }
   },
   { collection: "dishCollection" }
